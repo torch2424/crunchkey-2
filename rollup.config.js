@@ -1,18 +1,19 @@
 import svelte from 'rollup-plugin-svelte';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-	input: 'src/main.js',
+  input: 'src/js/index.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'public/build/bundle.js'
+		file: 'dist/bundle.js'
 	},
 	plugins: [
 		svelte({
@@ -21,9 +22,13 @@ export default {
 			// we'll extract any component CSS out into
 			// a separate file — better for performance
 			css: css => {
-				css.write('public/build/bundle.css');
+        css.write('dist/bundle.css');
 			}
-		}),
+    }),
+
+    copy({
+      targets: [{ src: 'src/index.html', dest: 'dist' }]
+    }),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -42,7 +47,7 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && livereload('dist'),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
@@ -61,7 +66,7 @@ function serve() {
 			if (!started) {
 				started = true;
 
-				require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+				require('child_process').spawn('npm', ['run', 'start'], {
 					stdio: ['ignore', 'inherit', 'inherit'],
 					shell: true
 				});
