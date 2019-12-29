@@ -1,3 +1,9 @@
+# Sytem Files
+.DS_Store
+
+# Project files
+dist/
+
 # Logs
 logs
 *.log
