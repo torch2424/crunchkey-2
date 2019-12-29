@@ -1,0 +1,29 @@
+{
+  "name": "crunchkey",
+  "version": "0.0.1",
+  "description": "It's Crunchkey, but 2. Built with AssemblyScript (WebAssembly)!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torch2424/crunchkey-2.git"
+  },
+  "author": "Aaron Turner & Julian Poyourow",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/torch2424/crunchkey-2/issues"
+  },
+  "homepage": "https://github.com/torch2424/crunchkey-2#readme",
+  "devDependencies": {
+    "assemblyscript": "^0.8.1",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.27.14",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^5.1.1",
+    "rollup-plugin-terser": "^5.1.3",
+    "serve": "^11.2.0"
+  }
+}
