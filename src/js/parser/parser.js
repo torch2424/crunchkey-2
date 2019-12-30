@@ -11,5 +11,19 @@ export function parseTokensIntoAst(tokens) {
 }
 
 function addNodeToAstFromTokens(ast, tokens) {
-  tokens.unshift();
+
+  let token = tokens.shift();
+
+  // Handle parentheses
+  if (token === '(') {
+    
+  }
+
+  // Handle operators
+  // TODO
+  if (token === '+') {
+  
+  }
+
+  // Default, must be a number value
 }
