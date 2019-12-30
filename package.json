@@ -6,7 +6,11 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "serve dist"
+    "start": "serve dist",
+    "wasm:build": "wasm:build:optimized",
+    "wasm:dev": "watch \"npm run wasm:build:optimized && echo 'Built Optimized Wasm'\" \"src/assembly\"",
+    "wasm:build:debug": "asc src/assembly/index.ts -b dist/index.debug.wasm -t dist/index.debug.wat --sourceMap --validate --debug --runtime full",
+    "wasm:build:optimized": "asc src/assembly/index.ts -b dist/index.wasm --sourceMap dist/index.wasm.map -t dist/index.wat --sourceMap --validate --runtime full -O3"
   },
   "repository": {
     "type": "git",
@@ -29,6 +33,7 @@
     "rollup-plugin-svelte": "^5.1.1",
     "rollup-plugin-terser": "^5.1.3",
     "serve": "^11.2.0",
-    "svelte": "^3.16.7"
+    "svelte": "^3.16.7",
+    "watch": "^1.0.2"
   }
 }

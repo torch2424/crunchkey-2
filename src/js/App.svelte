@@ -1,4 +1,13 @@
 <script>
+	import {wasmBrowserInstantiate} from './instantiate-wasm.js';
+
+	const wasmTask = async () => {
+		const response = await wasmBrowserInstantiate('index.wasm');
+
+		console.log('Wasm instantiate response:', response);
+		console.log('Wasm add response:', response.instance.exports.add(2.0, 2.0));
+	};
+
 	let displayWelcomeMessage = !localStorage.getItem("hideWelcomeMessage");
 
 	const hideWelcomeMessage = () => {
