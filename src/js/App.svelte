@@ -1,30 +1,51 @@
 <script>
-	export let name;
+	let displayWelcomeMessage = !localStorage.getItem("hideWelcomeMessage");
+
+	const hideWelcomeMessage = () => {
+		localStorage.setItem("hideWelcomeMessage", true);
+		displayWelcomeMessage = false;
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	{#if displayWelcomeMessage}
+		<div class="welcomeMessage">
+			<h3>Welcome to CrunchKey!</h3>
+
+			<br />
+
+			To get started, you can enter any expression in the field below.<br />
+			CrunchKey will instantly calculate and display the result!<br /><br />
+
+			You can use any of the following standard mathematical symbols:<br /><br />
+
+			+ - * / e ^ ln() log() sqrt()<br /><br />
+
+			<button on:click={hideWelcomeMessage}>Hide This Message</button>
+		</div>
+	{/if}
+
+	<input class="expression" placeholder="Expression..." />
 </main>
 
 <style>
 	main {
+		max-width: 400px;
 		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+
+		margin-left: auto;
+		margin-right: auto;
+
+		padding: 1rem;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.welcomeMessage {
+		margin-top: 1rem;
+		margin-bottom: 2rem;
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	.expression {
+		width: 100%;
+		padding: 1rem;
 	}
 </style>
