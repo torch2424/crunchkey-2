@@ -6,15 +6,18 @@ export enum AST_NODE_TYPES {
 };
 
 export enum AST_NODE_OPERATORS {
-  PLUS = '+'
+  PLUS     = '+',
+  SUBTRACT = '-',
+  MULTIPLY = '*',
+  DIVIDE   = '/'
 };
 
 export class AstNode {
   type: AST_NODE_TYPES;
-  value: AST_NODE_OPERATORS;
+  value: AST_NODE_OPERATORS | number;
   children: AstNode[];
 
-  constructor(type: AST_NODE_TYPES, value: AST_NODE_OPERATORS) {
+  constructor(type: AST_NODE_TYPES, value: AST_NODE_OPERATORS | number) {
     if (!type) {
       throw new Error('Ast Nodes must have a type');
     }
