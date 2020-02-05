@@ -4,6 +4,9 @@ import commonjs from 'rollup-plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import typescript from "rollup-plugin-typescript2";
+import typescriptCompiler from "typescript";
+import sveltePreprocessor from "svelte-preprocess";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -15,11 +18,20 @@ const plugins = [
     // a separate file — better for performance
     css: css => {
       css.write('dist/bundle.css');
-    }
+    },
+    extensions: [".svelte"],
+    preprocess: sveltePreprocessor()
   }),
 
   copy({
     targets: [{ src: 'src/index.html', dest: 'dist' }]
+  }),
+
+  // Support typescript
+  typescript({ 
+    typescript: typescriptCompiler,
+    objectHashIgnoreUnknownHack: true,
+    clean: true
   }),
 
   // If you have external dependencies installed from
@@ -48,7 +60,7 @@ const plugins = [
 
 
 export default {
-  input: 'src/js/index.js',
+  input: 'src/ts/index.ts',
 	output: {
 		sourcemap: true,
 		format: 'iife',
