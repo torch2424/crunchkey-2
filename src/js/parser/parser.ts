@@ -1,30 +1,23 @@
-import {AST_NODE_TYPES, SUPPORTED_AST_NODE_OPERATORS, AstNode} from './ast-node';
-
-const basicOperators = [
-  '+',
-  '-',
-  '*',
-  '/'
-];
+import { AST_NODE_TYPES, AST_NODE_OPERATORS, AstNode } from './ast-node';
 
 export function parseTokensIntoAst(tokens) {
-  let ast = new AstNode(AST_NODE_TYPES.EQUATION);
+  let ast = new AstNode(AST_NODE_TYPES.EQUATION, 0);
 
   addNodeToAstFromTokens(ast, tokens);
 
   return ast.children[0];
 }
 
-function addNodeToAstFromTokens(ast, tokens) {
+function addNodeToAstFromTokens(ast: AstNode, tokens: string[]) {
 
   // Handle laest priority first, since we are building the tree top down
 
-  const foundOperator = basicOperators.some(operator => {
+  const foundOperator = Object.keys(AST_NODE_OPERATORS).some((operator: AST_NODE_OPERATORS) => {
     if (tokens.includes(operator)) {
       const operatorNode = getOperatorNode(operator, tokens);
 
       // Add the plus node to the AST
-      ast.children.push(operatorNode);
+      ast.addChildNode(operatorNode);
 
       return true;
     }
@@ -51,7 +44,7 @@ function addNodeToAstFromTokens(ast, tokens) {
       addNodeToAstFromTokens(parenNode, parenTokens);
 
       // Add the Paren Node to the parent ast
-      ast.children.push(parenNode);
+      ast.addChildNode(parenNode);
 
       // Run the 
     } else {
@@ -62,12 +55,18 @@ function addNodeToAstFromTokens(ast, tokens) {
   */
 
   // Default, must be a number value
-  const numberNode = new AstNode(AST_NODE_TYPES.NUMBER, tokens[0]);
-  ast.children.push(numberNode);
+  try {
+    const val = parseInt(tokens[0], 10);
+
+    const numberNode = new AstNode(AST_NODE_TYPES.NUMBER, val);
+    ast.addChildNode(numberNode);
+  } catch (e) {
+    alert(`Expected integer value, got "${tokens[0]}"`);
+  }
 }
 
-function getOperatorNode(operator, tokens) {
-  const operatorNode = new AstNode(AST_NODE_TYPES.OPERATOR, SUPPORTED_AST_NODE_OPERATORS[operator]);
+function getOperatorNode(operator: AST_NODE_OPERATORS, tokens: string[]) {
+  const operatorNode = new AstNode(AST_NODE_TYPES.OPERATOR, AST_NODE_OPERATORS[operator]);
 
   // Get all the tokens to the left of the plus
   const leftTokens = tokens.splice(0, tokens.indexOf(operator));
