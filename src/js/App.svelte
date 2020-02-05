@@ -1,5 +1,7 @@
 <script>
 	import {wasmBrowserInstantiate} from './instantiate-wasm.js';
+  import {tokenize} from './tokenizer/tokenizer';
+  import {parseTokensIntoAst} from './parser/parser';
 
 	const wasmTask = async () => {
 		const response = await wasmBrowserInstantiate('index.wasm');
@@ -7,6 +9,7 @@
 		console.log('Wasm instantiate response:', response);
 		console.log('Wasm add response:', response.instance.exports.add(2.0, 2.0));
 	};
+  wasmTask();
 
 	let displayWelcomeMessage = !localStorage.getItem("hideWelcomeMessage");
 
@@ -14,6 +17,21 @@
 		localStorage.setItem("hideWelcomeMessage", true);
 		displayWelcomeMessage = false;
 	}
+
+  window.onExpressionChange = event => {
+    console.log('onExpressionChange', event);
+    const expression = event.target.value;
+
+    console.log('expression', expression);
+
+    const tokens = tokenize(event.target.value);
+
+    console.log('tokens', tokens);
+
+    const ast = parseTokensIntoAst(tokens);
+    
+    console.log('Ayyeee', ast);
+  }  
 </script>
 
 <main>
@@ -34,7 +52,7 @@
 		</div>
 	{/if}
 
-	<input class="expression" placeholder="Expression..." />
+	<input class="expression" placeholder="Expression..." onchange="onExpressionChange(event)" />
 </main>
 
 <style>

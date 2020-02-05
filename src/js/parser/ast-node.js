@@ -1,13 +1,16 @@
-export class AST_NODE_TYPES = {
+export const AST_NODE_TYPES = {
   EQUATION: 'EQUATION',
   OPERATOR: 'OPERATOR',
   NUMBER: 'NUMBER',
   PAREN: 'PAREN'
 };
 
-export const SUPPORTED_AST_NODE_OPERATORS = [
-  '+'
-];
+export const SUPPORTED_AST_NODE_OPERATORS = {
+  '+': '+',
+  '-': '-',
+  '/': '/',
+  '*': '*'
+};
 
 
 export class AstNode {

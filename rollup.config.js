@@ -57,7 +57,8 @@ export default {
 	},
 	plugins,
 	watch: {
-		clearScreen: false
+    clearScreen: false,
+    include: 'src/**'
 	}
 };
 
